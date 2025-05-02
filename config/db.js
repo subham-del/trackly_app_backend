@@ -3,7 +3,7 @@ const sql = require("mssql");
 const config = {
   user: "subhamsql",
   password: "subham123",
-  server: "192.168.1.2",
+  server: "192.168.1.4",
   database: "TracklyDB",
   options: {
     encrypt: false, // Use true for Azure

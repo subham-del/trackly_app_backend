@@ -7,6 +7,7 @@ const {
   handleGetTotalFriendRequests,
   handleGetFriends,
   handleAcceptFriendRequest,
+  handleSendNotification,
 } = require("../controllers/userController");
 const authenticateToken = require("../middleware/authenticateToken");
 
@@ -34,5 +35,7 @@ router.post(
   authenticateToken,
   handleAcceptFriendRequest
 );
+
+router.post("/send-notification", authenticateToken, handleSendNotification);
 
 module.exports = router;

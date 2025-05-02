@@ -85,6 +85,22 @@ const handleAcceptFriendRequest = async (req, res) => {
   }
 };
 
+const handleSendNotification = async (req, res) => {
+  const { deviceId, message } = req.body; // deviceId is userId in your case
+
+  try {
+    global.sendNotificationToUser(deviceId, message);
+    return res
+      .status(200)
+      .json({ success: true, message: "Notification sent" });
+  } catch (error) {
+    console.error("Error sending notification:", error);
+    return res
+      .status(500)
+      .json({ success: false, error: "Failed to send notification" });
+  }
+};
+
 module.exports = {
   users,
   handleSendFriendRequest,
@@ -92,4 +108,5 @@ module.exports = {
   handleGetTotalFriendRequests,
   handleGetFriends,
   handleAcceptFriendRequest,
+  handleSendNotification,
 };
