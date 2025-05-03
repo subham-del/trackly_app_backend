@@ -116,7 +116,12 @@ async function acceptFriendRequest(requestId) {
     throw new Error("Friend request not found or already accepted");
   }
 
-  const { SenderId, ReceiverId } = result.recordset[0];
+  let { SenderId, ReceiverId } = result.recordset[0];
+
+  // Ensure UserId1 < UserId2 for CHECK constraint
+  const [UserId1, UserId2] = SenderId < ReceiverId
+    ? [SenderId, ReceiverId]
+    : [ReceiverId, SenderId];
 
   // Update FriendRequests table
   await global.db.request().input("requestId", requestId).query(`
@@ -126,11 +131,12 @@ async function acceptFriendRequest(requestId) {
   `);
 
   // Insert into Friends table
-  await global.db.request().input("requestId", requestId).query(`
+  await global.db.request().query(`
     INSERT INTO Friends (UserId1, UserId2, FriendsSince)
-    VALUES (${SenderId}, ${ReceiverId}, GETDATE())
+    VALUES (${UserId1}, ${UserId2}, GETDATE())
   `);
 }
+
 
 module.exports = {
   findUserByEmailAndPassword,

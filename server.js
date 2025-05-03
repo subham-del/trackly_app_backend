@@ -121,7 +121,7 @@ global.sendNotificationToUser = sendNotificationToUser;
 connectToDatabase()
   .then((pool) => {
     global.db = pool;
-    server.listen(PORT, () => {
+    server.listen(PORT, '0.0.0.0', () => {
       // Listen using HTTP+WS server
       console.log(`Server running on port ${PORT}`);
     });
