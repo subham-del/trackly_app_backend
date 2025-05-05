@@ -1,10 +1,10 @@
 const sql = require("mssql");
 
 const config = {
-  user: "subhamsql",
-  password: "subham123",
-  server: "192.168.1.4",
-  database: "TracklyDB",
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  server: process.env.DB_SERVER,
+  database: process.env.DB_NAME,
   options: {
     encrypt: false, // Use true for Azure
     trustServerCertificate: true, // Set to true for local dev/self-signed certs
